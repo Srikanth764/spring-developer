@@ -34,8 +34,11 @@ public class UserMapper {
         if (userDto == null) {
             return null;
         }
-        User user = new User(userDto.getName(), userDto.getEmail(), userDto.getAge());
+        User user = new User();
         user.setId(userDto.getId());
+        user.setName(userDto.getName());
+        user.setEmail(userDto.getEmail());
+        user.setAge(userDto.getAge());
         return user;
     }
 

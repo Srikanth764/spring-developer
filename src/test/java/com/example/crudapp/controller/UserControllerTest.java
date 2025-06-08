@@ -39,7 +39,7 @@ class UserControllerTest {
 
     @BeforeEach
     void setUp() {
-        testUserDto = new UserDto(1L, "John Doe", "john@example.com", 25);
+        testUserDto = new UserDto(1L, "John Doe", "john@example.com", Integer.valueOf(25));
     }
 
     @Test
@@ -58,7 +58,7 @@ class UserControllerTest {
 
     @Test
     void createUser_InvalidInput_ReturnsBadRequest() throws Exception {
-        UserDto invalidUser = new UserDto(null, "", "invalid-email", -1);
+        UserDto invalidUser = new UserDto(null, "", "invalid-email", Integer.valueOf(-1));
 
         mockMvc.perform(post("/api/users")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -113,7 +113,7 @@ class UserControllerTest {
 
     @Test
     void updateUser_Success() throws Exception {
-        UserDto updatedUser = new UserDto(1L, "Jane Doe", "john@example.com", 30);
+        UserDto updatedUser = new UserDto(1L, "Jane Doe", "john@example.com", Integer.valueOf(30));
         when(userService.updateUser(eq(1L), any(UserDto.class))).thenReturn(updatedUser);
 
         mockMvc.perform(put("/api/users/1")

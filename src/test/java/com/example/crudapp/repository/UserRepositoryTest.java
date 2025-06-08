@@ -24,7 +24,10 @@ class UserRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        testUser = new User("John Doe", "john@example.com", 25);
+        testUser = new User();
+        testUser.setName("John Doe");
+        testUser.setEmail("john@example.com");
+        testUser.setAge(25);
     }
 
     @Test

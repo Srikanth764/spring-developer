@@ -59,7 +59,10 @@ public class UserApiStepDefinitions {
 
     @When("I create a user with name {string}, email {string}, and age {int}")
     public void iCreateAUserWithNameEmailAndAge(String name, String email, int age) {
-        UserDto userDto = new UserDto(name, email, age);
+        UserDto userDto = new UserDto();
+        userDto.setName(name);
+        userDto.setEmail(email);
+        userDto.setAge(age);
         lastResponse = restTemplate.postForEntity(getBaseUrl(), userDto, String.class);
         
         if (lastResponse.getStatusCode() == HttpStatus.CREATED) {
@@ -92,7 +95,10 @@ public class UserApiStepDefinitions {
 
     @Given("a user exists with email {string}")
     public void aUserExistsWithEmail(String email) {
-        UserDto userDto = new UserDto("Existing User", email, 25);
+        UserDto userDto = new UserDto();
+        userDto.setName("Existing User");
+        userDto.setEmail(email);
+        userDto.setAge(25);
         ResponseEntity<String> response = restTemplate.postForEntity(getBaseUrl(), userDto, String.class);
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
     }
@@ -124,11 +130,10 @@ public class UserApiStepDefinitions {
     public void usersExistInTheSystem(DataTable dataTable) {
         List<Map<String, String>> users = dataTable.asMaps(String.class, String.class);
         for (Map<String, String> user : users) {
-            UserDto userDto = new UserDto(
-                user.get("name"),
-                user.get("email"),
-                Integer.parseInt(user.get("age"))
-            );
+            UserDto userDto = new UserDto();
+            userDto.setName(user.get("name"));
+            userDto.setEmail(user.get("email"));
+            userDto.setAge(Integer.parseInt(user.get("age")));
             ResponseEntity<String> response = restTemplate.postForEntity(getBaseUrl(), userDto, String.class);
             assertEquals(HttpStatus.CREATED, response.getStatusCode());
         }
@@ -157,7 +162,10 @@ public class UserApiStepDefinitions {
 
     @Given("a user exists with name {string}, email {string}, and age {int}")
     public void aUserExistsWithNameEmailAndAge(String name, String email, int age) {
-        UserDto userDto = new UserDto(name, email, age);
+        UserDto userDto = new UserDto();
+        userDto.setName(name);
+        userDto.setEmail(email);
+        userDto.setAge(age);
         ResponseEntity<String> response = restTemplate.postForEntity(getBaseUrl(), userDto, String.class);
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
         
@@ -208,7 +216,10 @@ public class UserApiStepDefinitions {
 
     @When("I update the user with name {string}, email {string}, and age {int}")
     public void iUpdateTheUserWithNameEmailAndAge(String name, String email, int age) {
-        UserDto updateDto = new UserDto(name, email, age);
+        UserDto updateDto = new UserDto();
+        updateDto.setName(name);
+        updateDto.setEmail(email);
+        updateDto.setAge(age);
         HttpEntity<UserDto> entity = new HttpEntity<>(updateDto);
         lastResponse = restTemplate.exchange(
             getBaseUrl() + "/" + currentUserId,
@@ -245,7 +256,10 @@ public class UserApiStepDefinitions {
                 fail("User with name " + userName + " not found");
             }
             
-            UserDto updateDto = new UserDto(userName, newEmail, 25);
+            UserDto updateDto = new UserDto();
+            updateDto.setName(userName);
+            updateDto.setEmail(newEmail);
+            updateDto.setAge(25);
             HttpEntity<UserDto> entity = new HttpEntity<>(updateDto);
             lastResponse = restTemplate.exchange(
                 getBaseUrl() + "/" + userIdToUpdate,
@@ -265,7 +279,10 @@ public class UserApiStepDefinitions {
 
     @When("I update a user with ID {int}")
     public void iUpdateAUserWithId(int userId) {
-        UserDto updateDto = new UserDto("Updated Name", "updated@example.com", 30);
+        UserDto updateDto = new UserDto();
+        updateDto.setName("Updated Name");
+        updateDto.setEmail("updated@example.com");
+        updateDto.setAge(30);
         HttpEntity<UserDto> entity = new HttpEntity<>(updateDto);
         lastResponse = restTemplate.exchange(
             getBaseUrl() + "/" + userId,

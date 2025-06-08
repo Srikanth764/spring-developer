@@ -17,8 +17,7 @@ class UserMapperTest {
     void setUp() {
         userMapper = new UserMapper();
         
-        testUser = new User("John Doe", "john@example.com", 25);
-        testUser.setId(1L);
+        testUser = new User(1L, "John Doe", "john@example.com", 25);
         
         testUserDto = new UserDto(1L, "John Doe", "john@example.com", 25);
     }
