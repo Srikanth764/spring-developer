@@ -78,3 +78,21 @@ Feature: User Management API
     When I delete a user with ID 999
     Then the deletion should fail with not found error
     And the error message should indicate user not found
+
+  Scenario: Get 7-day weather forecast for valid zipcode
+    When I request weather forecast for zipcode "10001"
+    Then the response status should be 200
+    And the response should contain weather data for "10001"
+    And the response should contain 7 days of forecast
+    And each forecast day should have date, description, temperatures, humidity, and wind speed
+
+  Scenario: Get current weather for valid zipcode
+    When I request current weather for zipcode "90210"
+    Then the response status should be 200
+    And the response should contain current weather data
+    And the response should have date, description, temperatures, humidity, and wind speed
+
+  Scenario: Get weather forecast for invalid zipcode should fail
+    When I request weather forecast for zipcode "invalid"
+    Then the response status should be 400
+    And the response should contain error message "Invalid zip code format. Expected format: 12345 or 12345-6789"

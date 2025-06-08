@@ -205,3 +205,65 @@ index=application source="*crudapp*"
 | eval avg_operations_per_user=round(total_operations/active_users, 2)
 | fields active_users, total_operations, avg_operations_per_user
 ```
+
+## Weather API Monitoring
+
+### Weather API Response Time Analysis
+```splunk
+index=application source="*crudapp*" "/api/weather/"
+| rex field=_raw "duration=(?<response_time>\d+)ms"
+| rex field=_raw "zipcode (?<zipcode>\d{5}(-\d{4})?)"
+| stats avg(response_time) as avg_response_time, 
+        max(response_time) as max_response_time, 
+        perc95(response_time) as p95_response_time 
+        by zipcode
+| sort -avg_response_time
+```
+
+### Weather API Usage by Zipcode
+```splunk
+index=application source="*crudapp*" "/api/weather/"
+| rex field=_raw "zipcode (?<zipcode>\d{5}(-\d{4})?)"
+| stats count by zipcode
+| sort -count
+| head 20
+```
+
+### Weather API Error Rate
+```splunk
+index=application source="*crudapp*" "/api/weather/"
+| rex field=_raw "HTTP/1.1\"\s+(?<status_code>\d+)"
+| eval is_error=if(status_code >= 400, 1, 0)
+| stats sum(is_error) as error_count, count as total_requests
+| eval error_rate=(error_count/total_requests)*100
+| eval alert_level=case(
+    error_rate > 10, "critical",
+    error_rate > 5, "warning",
+    1=1, "normal"
+)
+```
+
+### Invalid Zipcode Attempts
+```splunk
+index=application source="*crudapp*" "Invalid zip code format"
+| rex field=_raw "zipcode (?<invalid_zipcode>\S+)"
+| stats count by invalid_zipcode
+| sort -count
+| head 15
+```
+
+### Weather Service Performance Trends
+```splunk
+index=application source="*crudapp*" "/api/weather/"
+| timechart span=1h count as weather_requests
+| eval trend=if(weather_requests > avg(weather_requests), "above_average", "below_average")
+```
+
+### Weather API Cache Performance
+```splunk
+index=application source="*crudapp*" "weather" "cache"
+| rex field=_raw "cache_(?<cache_result>hit|miss)"
+| stats count by cache_result
+| eval cache_hit_rate=round((count/sum(count))*100, 2)
+| where cache_result="hit"
+```

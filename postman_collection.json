@@ -512,6 +512,322 @@
           "body": "{\n  \"timestamp\": \"2023-10-01T12:00:00\",\n  \"status\": 409,\n  \"error\": \"User Already Exists\",\n  \"message\": \"User with email john.doe@example.com already exists\"\n}"
         }
       ]
+    },
+    {
+      "name": "Weather API",
+      "item": [
+        {
+          "name": "Get 7-Day Weather Forecast",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/weather/forecast/10001",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "weather",
+                "forecast",
+                "10001"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Success Response",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/weather/forecast/10001",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "weather",
+                    "forecast",
+                    "10001"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"location\": \"New York, NY\",\n  \"zipCode\": \"10001\",\n  \"forecast\": [\n    {\n      \"date\": \"2025-06-08\",\n      \"description\": \"Sunny\",\n      \"temperatureHigh\": 75.5,\n      \"temperatureLow\": 60.2,\n      \"humidity\": 45,\n      \"windSpeed\": 8.5\n    }\n  ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get Current Weather",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/weather/current/90210",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "weather",
+                "current",
+                "90210"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Success Response",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/weather/current/90210",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "weather",
+                    "current",
+                    "90210"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"date\": \"2025-06-08\",\n  \"description\": \"Partly Cloudy\",\n  \"temperatureHigh\": 72.8,\n  \"temperatureLow\": 58.3,\n  \"humidity\": 52,\n  \"windSpeed\": 12.1\n}"
+            }
+          ]
+        },
+        {
+          "name": "Invalid Zipcode Error",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/weather/forecast/invalid",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "weather",
+                "forecast",
+                "invalid"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Bad Request",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/weather/forecast/invalid",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "weather",
+                    "forecast",
+                    "invalid"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"timestamp\": \"2025-06-08T22:03:00.123\",\n  \"status\": 400,\n  \"error\": \"Invalid Argument\",\n  \"message\": \"Invalid zip code format. Expected format: 12345 or 12345-6789\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Weather API",
+      "item": [
+        {
+          "name": "Get 7-Day Weather Forecast",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/weather/forecast/10001",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "weather",
+                "forecast",
+                "10001"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Success Response",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/weather/forecast/10001",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "weather",
+                    "forecast",
+                    "10001"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"location\": \"New York, NY\",\n  \"zipCode\": \"10001\",\n  \"forecast\": [\n    {\n      \"date\": \"2025-06-08\",\n      \"description\": \"Sunny\",\n      \"temperatureHigh\": 75.5,\n      \"temperatureLow\": 60.2,\n      \"humidity\": 45,\n      \"windSpeed\": 8.5\n    }\n  ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get Current Weather",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/weather/current/90210",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "weather",
+                "current",
+                "90210"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Success Response",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/weather/current/90210",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "weather",
+                    "current",
+                    "90210"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"date\": \"2025-06-08\",\n  \"description\": \"Partly Cloudy\",\n  \"temperatureHigh\": 72.8,\n  \"temperatureLow\": 58.3,\n  \"humidity\": 52,\n  \"windSpeed\": 12.1\n}"
+            }
+          ]
+        },
+        {
+          "name": "Invalid Zipcode Error",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/weather/forecast/invalid",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "weather",
+                "forecast",
+                "invalid"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Bad Request",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/weather/forecast/invalid",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "weather",
+                    "forecast",
+                    "invalid"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"timestamp\": \"2025-06-08T22:03:00.123\",\n  \"status\": 400,\n  \"error\": \"Invalid Argument\",\n  \"message\": \"Invalid zip code format. Expected format: 12345 or 12345-6789\"\n}"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

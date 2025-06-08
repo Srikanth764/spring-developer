@@ -318,4 +318,85 @@ public class UserApiStepDefinitions {
     public void theDeletionShouldFailWithNotFoundError() {
         assertEquals(HttpStatus.NOT_FOUND, lastResponse.getStatusCode());
     }
+
+    @When("I request weather forecast for zipcode {string}")
+    public void iRequestWeatherForecastForZipcode(String zipCode) {
+        String url = "http://localhost:" + springConfiguration.getPort() + "/api/weather/forecast/" + zipCode;
+        lastResponse = restTemplate.getForEntity(url, String.class);
+    }
+
+    @When("I request current weather for zipcode {string}")
+    public void iRequestCurrentWeatherForZipcode(String zipCode) {
+        String url = "http://localhost:" + springConfiguration.getPort() + "/api/weather/current/" + zipCode;
+        lastResponse = restTemplate.getForEntity(url, String.class);
+    }
+
+    @Then("the response status should be {int}")
+    public void theResponseStatusShouldBe(int expectedStatus) {
+        assertEquals(expectedStatus, lastResponse.getStatusCodeValue());
+    }
+
+    @Then("the response should contain weather data for {string}")
+    public void theResponseShouldContainWeatherDataFor(String zipCode) throws Exception {
+        String responseBody = lastResponse.getBody();
+        Map<String, Object> responseMap = objectMapper.readValue(responseBody, Map.class);
+        assertEquals(zipCode, responseMap.get("zipCode"));
+        assertNotNull(responseMap.get("location"));
+    }
+
+    @Then("the response should contain {int} days of forecast")
+    public void theResponseShouldContainDaysOfForecast(int expectedDays) throws Exception {
+        String responseBody = lastResponse.getBody();
+        Map<String, Object> responseMap = objectMapper.readValue(responseBody, Map.class);
+        List<Map<String, Object>> forecast = (List<Map<String, Object>>) responseMap.get("forecast");
+        assertEquals(expectedDays, forecast.size());
+    }
+
+    @Then("each forecast day should have date, description, temperatures, humidity, and wind speed")
+    public void eachForecastDayShouldHaveRequiredFields() throws Exception {
+        String responseBody = lastResponse.getBody();
+        Map<String, Object> responseMap = objectMapper.readValue(responseBody, Map.class);
+        List<Map<String, Object>> forecast = (List<Map<String, Object>>) responseMap.get("forecast");
+        
+        for (Map<String, Object> day : forecast) {
+            assertNotNull(day.get("date"));
+            assertNotNull(day.get("description"));
+            assertNotNull(day.get("temperatureHigh"));
+            assertNotNull(day.get("temperatureLow"));
+            assertNotNull(day.get("humidity"));
+            assertNotNull(day.get("windSpeed"));
+        }
+    }
+
+    @Then("the response should contain current weather data")
+    public void theResponseShouldContainCurrentWeatherData() throws Exception {
+        String responseBody = lastResponse.getBody();
+        Map<String, Object> responseMap = objectMapper.readValue(responseBody, Map.class);
+        assertNotNull(responseMap.get("date"));
+        assertNotNull(responseMap.get("description"));
+        assertNotNull(responseMap.get("temperatureHigh"));
+        assertNotNull(responseMap.get("temperatureLow"));
+        assertNotNull(responseMap.get("humidity"));
+        assertNotNull(responseMap.get("windSpeed"));
+    }
+
+    @Then("the response should have date, description, temperatures, humidity, and wind speed")
+    public void theResponseShouldHaveRequiredWeatherFields() throws Exception {
+        String responseBody = lastResponse.getBody();
+        Map<String, Object> responseMap = objectMapper.readValue(responseBody, Map.class);
+        assertNotNull(responseMap.get("date"));
+        assertNotNull(responseMap.get("description"));
+        assertNotNull(responseMap.get("temperatureHigh"));
+        assertNotNull(responseMap.get("temperatureLow"));
+        assertNotNull(responseMap.get("humidity"));
+        assertNotNull(responseMap.get("windSpeed"));
+    }
+
+    @Then("the response should contain error message {string}")
+    public void theResponseShouldContainErrorMessage(String expectedMessage) throws Exception {
+        String responseBody = lastResponse.getBody();
+        Map<String, Object> responseMap = objectMapper.readValue(responseBody, Map.class);
+        String actualMessage = (String) responseMap.get("message");
+        assertEquals(expectedMessage, actualMessage);
+    }
 }
